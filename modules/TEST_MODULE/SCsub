@@ -1,0 +1,24 @@
+# SCsub
+import platform
+
+Import('env')
+Import('env_modules')
+
+
+
+env_gdnet = env_modules.Clone()
+
+# Compile and link the module's source files
+env_gdnet.Append(CPPPATH=["Regolith-1.0/include"])
+
+module_obj = []
+env_gdnet.add_source_files(module_obj, "*.cpp")
+env.modules_sources += module_obj
+
+if platform.system() == "Windows":
+    # env.Append(LIBPATH=["#modules/gdnet/libs/WIN"])
+    # env.Append(LINKFLAGS="GameNetworkingSockets.lib")
+    pass
+elif platform.system() == "Darwin":
+    env.Append(LIBPATH=["#modules/TEST_MODULE/Regolith-1.0/lib"])
+    env.Append(LIBS="libRegolith")
